@@ -115,3 +115,34 @@ function initPortfolioFilter() {
         });
     });
 }
+
+// Contact form functionality
+function initContactForm() {
+    const form = document.querySelector('#contact-form');
+    const statusMessage = document.querySelector('#form-status');
+
+    if (!form) return;
+
+    form.addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: form.method,
+            body: formData,
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(response => {
+            if (response.ok) {
+                statusMessage.innerText = 'Message sent successfully!';
+                form.reset();
+            } else {
+                statusMessage.innerText = 'Oops! Something went wrong.';
+            }
+        }).catch(error => {
+            statusMessage.innerText = 'Oops! Something went wrong.';
+        });
+    });
+}
